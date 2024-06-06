@@ -1,4 +1,4 @@
-import {cart,removefromcart} from '../data/cart.js';
+import {cart,removefromcart,updatedeliveryoption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatcurrency } from './utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'; 
@@ -89,7 +89,7 @@ function deliveryoptionshtml(matchingproduct,cartitem){
    const isChecked=deliveryoption.id===cartitem.deliveryoptionsid;
 
     html+=
-` <div class="delivery-option">
+` <div class="delivery-option js-delivery-option"data-product-id="${matchingproduct.id}" data-delivery-option-id="${deliveryoption.id}">
 <input type="radio" ${isChecked?'checked':''}
   class="delivery-option-input"
   name="delivery-option-${matchingproduct.id}">
@@ -119,3 +119,10 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
   container.remove();
 });
 });
+
+document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+ element.addEventListener('click',()=>{
+  const {productId,deliveryoptionsid}=element.dataset;
+updatedeliveryoption(productId,deliveryoptionsid);
+ })
+})
