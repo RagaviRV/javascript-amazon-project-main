@@ -9,6 +9,12 @@ const today=dayjs();
 const deliverydate=today.add(7,'days');
 
 console.log(deliverydate.format('dddd,MMMM D'));
+
+
+function renderordersummary(){
+
+
+
 let cartsummaryhtml='';
 
 cart.forEach((cartitem)=>{
@@ -124,5 +130,8 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
  element.addEventListener('click',()=>{
   const {productId,deliveryoptionsid}=element.dataset;
 updatedeliveryoption(productId,deliveryoptionsid);
- })
-})
+renderordersummary();
+ });
+});
+}
+renderordersummary();
