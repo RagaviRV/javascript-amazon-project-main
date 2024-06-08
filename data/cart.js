@@ -9,15 +9,20 @@ if(!cart){
   productid:'15b6fc6f-327a-4ec4-896f-486349e85a3d',
   quantity:1,
   deliveryoptionsid:'2'
-} ];  
+} ,
+{
+  productid:'901eb2ca-386d-432e-82f0-6fb1ee7bf969',
+  quantity:1,
+  deliveryoptionsid:'2'
+}];  
 }
 
 
 export function addtocart(productid){
-
   let matchingItem;
   cart.forEach((cartitem)=>{
-    if(productid===cartitem.productid){
+    const product_id=cartitem.productid ?? cartitem.productId;
+    if(productid===product_id){
       matchingItem=cartitem;
     }
   });
@@ -41,9 +46,11 @@ savetostorage();
 
 
 export function removefromcart(productId){
+
  const newcart=[];
  cart.forEach((cartitem)=>{
- if(cartitem.productid!=productId){
+  const product_id=cartitem.productid ?? cartitem.productId;
+ if(product_id!=productId){
   newcart.push(cartitem);
  }
  });
@@ -53,12 +60,18 @@ export function removefromcart(productId){
 }
 
 export function updatedeliveryoption(productid,deliveryoptionid){
+// console.log(productid);
+console.log(productid,'deliveryoption ',deliveryoptionid);
+  console.log('cart',cart);
+  console.log('product id',productid);
   let matchingItem;
   cart.forEach((cartitem)=>{
-    if(productid===cartitem.productid){
+    const product_id=cartitem.productid ?? cartitem.productId;
+    if(productid===product_id){
       matchingItem=cartitem;
     }
   });
-  matchingItem.deliveryoptionid=deliveryoptionid;
+  matchingItem.deliveryoptionsid = deliveryoptionid;
+  console.log('matchingitem ',matchingItem);
   savetostorage();
 }

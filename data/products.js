@@ -1,4 +1,3 @@
-
 export function getproduct(productId){
   let matchingproduct;
   products.forEach((product)=>{

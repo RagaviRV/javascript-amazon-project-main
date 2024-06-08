@@ -7,9 +7,11 @@
   let productpricecents=0;
   let shippingpricecents=0;
   cart.forEach((cartitem)=>{
- const product=getproduct(cartitem.productid);
+    const product_id=cartitem.productid ?? cartitem.productId;
+ const product=getproduct(product_id);
  productpricecents+=product.priceCents*cartitem.quantity;
-const deliveryoption=getdeliveryoption(cartitem.deliveryoptionid);
+ const deliveryopt=cartitem.deliveryoptionsid ?? cartitem.deliveryOptionId;
+const deliveryoption=getdeliveryoption(deliveryopt);
 
 shippingpricecents+=deliveryoption.priceCents;
   });

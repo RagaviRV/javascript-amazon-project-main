@@ -10,9 +10,9 @@ import {renderpaymentsummary} from './paymentsummary.js';
 export function renderordersummary(){
 let cartsummaryhtml='';
 cart.forEach((cartitem)=>{
-   const productid=cartitem.productid;
+   const productid=cartitem.productid ?? cartitem.productId;
    const  matchingproduct=getproduct(productid);
-   const deliveryoptionId=cartitem.deliveryoptionid;
+   const deliveryoptionId=cartitem.deliveryoptionsid??cartitem.deliveryOptionId;
    const deliveryoption=getdeliveryoption(deliveryoptionId);
    const today=dayjs();
    const deliverydate=today.add(deliveryoption.deliverydays,'days');
@@ -65,15 +65,15 @@ function deliveryoptionshtml(matchingproduct,cartitem){
   deliveryoptions.forEach((deliveryoption)=>{
     const today=dayjs();
     const deliverydate=today.add(deliveryoption.deliverydays,'days');
-   // console.log(deliverydate);
     const dateString=deliverydate.format('dddd,MMMM D');
-
-    
     const priceString=deliveryoption.priceCents===0 ?'FREE' : `$${formatcurrency(deliveryoption.priceCents)} -`;
-   const isChecked=deliveryoption.id===cartitem.deliveryoptionid;
+    const delivery_id=cartitem.deliveryoptionsid  ?? cartitem.deliveryOptionId;
+   const isChecked=deliveryoption.id===delivery_id;
+   console.log(isChecked,delivery_id);
+
 
     html+=
-` <div class="delivery-option js-delivery-option"data-product-id="${matchingproduct.id}" data-delivery-option-id="${deliveryoption.id}">
+` <div class="delivery-option js-delivery-option" data-product-id="${matchingproduct.id}" data-delivery-option-id="${deliveryoption.id}">
 <input type="radio" ${isChecked?'checked':''}
   class="delivery-option-input"
   name="delivery-option-${matchingproduct.id}">
@@ -105,9 +105,11 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
 });
 
 document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+  console.log('element     ',element);
  element.addEventListener('click',()=>{
-  const {productId,deliveryoptionid}=element.dataset;
-updatedeliveryoption(productId,deliveryoptionid);
+  const {productId,deliveryOptionId}=element.dataset;
+  console.log('productid',productId,'deliveryorderid',deliveryOptionId);
+updatedeliveryoption(productId,deliveryOptionId);
 renderordersummary();
 renderpaymentsummary();
  });
