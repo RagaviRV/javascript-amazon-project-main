@@ -71,7 +71,7 @@ function deliveryoptionshtml(matchingproduct,cartitem){
     const priceString=deliveryoption.priceCents===0 ?'FREE' : `$${formatcurrency(deliveryoption.priceCents)} -`;
     const delivery_id=cartitem.deliveryoptionsid  ?? cartitem.deliveryOptionId;
    const isChecked=deliveryoption.id===delivery_id;
-   console.log(isChecked,delivery_id);
+   //console.log(isChecked,delivery_id);
 
 
     html+=
@@ -107,10 +107,10 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
 });
 
 document.querySelectorAll('.js-delivery-option').forEach((element)=>{
-  console.log('element     ',element);
+ // console.log('element     ',element);
  element.addEventListener('click',()=>{
   const {productId,deliveryOptionId}=element.dataset;
-  console.log('productid',productId,'deliveryorderid',deliveryOptionId);
+ // console.log('productid',productId,'deliveryorderid',deliveryOptionId);
 updatedeliveryoption(productId,deliveryOptionId);
 renderordersummary();
 renderpaymentsummary();

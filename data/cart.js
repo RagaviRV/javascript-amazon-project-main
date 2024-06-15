@@ -60,9 +60,9 @@ export function removefromcart(productId){
 
 export function updatedeliveryoption(productid,deliveryoptionid){
 // console.log(productid);
-console.log(productid,'deliveryoption ',deliveryoptionid);
-  console.log('cart',cart);
-  console.log('product id',productid);
+//console.log(productid,'deliveryoption ',deliveryoptionid);
+ // console.log('cart',cart);
+ // console.log('product id',productid);
   let matchingItem;
   cart.forEach((cartitem)=>{
     const product_id=cartitem.productid ?? cartitem.productId;
@@ -71,6 +71,17 @@ console.log(productid,'deliveryoption ',deliveryoptionid);
     }
   });
   matchingItem.deliveryoptionsid = deliveryoptionid;
-  console.log('matchingitem ',matchingItem);
+ // console.log('matchingitem ',matchingItem);
   savetostorage();
+}
+
+export function loadCart(fun
+){
+  const xhr=new XMLHttpRequest();
+  xhr.addEventListener('load',()=>{
+ console.log(xhr.response);
+  fun();
+  });
+  xhr.open('GET','http://supersimplebackend.dev/cart');
+  xhr.send();
 }
