@@ -70,6 +70,7 @@ console.log("wrking");
 }
 };
 
+
 export function loadProducts(fun
 ){
   const xhr=new XMLHttpRequest();
@@ -89,8 +90,26 @@ export function loadProducts(fun
 
 loadProducts();
 fun();
-
-
+export function loadProductsFetch(){
+ const promise= fetch(
+  'http://supersimplebackend.dev/products').then((response)=>{
+    return response.json();
+  }).then((productsData)=>{
+    products=productsData.map((prouctDetails)=>{
+      if(prouctDetails.type==='clothing'){
+        return new Clothing(prouctDetails);
+      }
+    return new Product(prouctDetails);
+    });
+    console.log('load products');
+  });
+  return promise;
+}
+/*
+loadProductsFetch().then(()=>{
+  console.log('next step')
+});
+*/
 export let products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
